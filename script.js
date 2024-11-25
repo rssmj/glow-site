@@ -13,19 +13,43 @@ document.addEventListener('mousemove', (e) => {
 });
 
 window.addEventListener('deviceorientation', (event) => {
-  const x = event.beta; // Forward/backward tilt in degrees
-  const y = event.gamma; // Left/right tilt in degrees
+  if (event.beta !== null && event.gamma !== null) {
+    // Check if values are available
+    const x = event.beta; // Forward/backward tilt in degrees
+    const y = event.gamma; // Left/right tilt in degrees
 
-  // Calculate new position based on orientation
-  const newX = window.innerWidth / 5 + y * 3; // Adjust multiplier for sensitivity
-  const newY = window.innerHeight / 5 - x * 3; // Adjust multiplier for sensitivity
+    // Calculate new position based on orientation
+    const newX = Math.min(
+      Math.max((y + 90) * (window.innerWidth / 180), 0),
+      window.innerWidth
+    ); // Adjust for orientation
+    const newY = Math.min(
+      Math.max((90 - x) * (window.innerHeight / 180), 0),
+      window.innerHeight
+    ); // Adjust for orientation
 
-  light.style.left = `${newX}px`;
-  light.style.top = `${newY}px`;
+    light.style.left = `${newX}px`;
+    light.style.top = `${newY}px`;
 
-  // Update the background overlay to create a fading effect
-  bgOverlay.style.background = `radial-gradient(circle at ${newX}px ${newY}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 0%)`;
+    // Update the background overlay to create a fading effect
+    bgOverlay.style.background = `radial-gradient(circle at ${newX}px ${newY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
+  }
 });
+
+// window.addEventListener('deviceorientation', (event) => {
+//   const x = event.beta; // Forward/backward tilt in degrees
+//   const y = event.gamma; // Left/right tilt in degrees
+
+//   // Calculate new position based on orientation
+//   const newX = window.innerWidth / 5 + y * 3; // Adjust multiplier for sensitivity
+//   const newY = window.innerHeight / 5 - x * 3; // Adjust multiplier for sensitivity
+
+//   light.style.left = `${newX}px`;
+//   light.style.top = `${newY}px`;
+
+//   // Update the background overlay to create a fading effect
+//   bgOverlay.style.background = `radial-gradient(circle at ${newX}px ${newY}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 0%)`;
+// });
 
 // Parallax scrolling effect
 document.addEventListener('scroll', () => {
