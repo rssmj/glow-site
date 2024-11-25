@@ -23,16 +23,32 @@ body {
 ========================================= */
 .light {
   position: absolute;
-  width: 300px; /* Adjusted size for a more flashlight-like effect */
-  height: 300px;
+  width: 750px; /* Adjusted size for a more flashlight-like effect */
+  height: 750px;
   background: radial-gradient(circle, rgb(0, 0, 0), rgb(0, 0, 0) 1%);
   border-radius: 50%;
   pointer-events: none;
   mix-blend-mode: screen; /* Blend light with background */
   transform: translate(-50%, -50%);
-  z-index: 3; /* Set index above the background overlay layer */
-  transition: transform 1s ease-in-out;
+  z-index: 4; /* Set index above the background overlay layer */
+  transition: transform 0.5s ease-in-out;
   filter: blur(100px); /* Add blur for a glowing effect */
+}
+
+/* Trail effect */
+.trail {
+  position: absolute;
+  width: 500px; /* Size of the trail */
+  height: 500px; /* Size of the trail */
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 1%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 0.5s ease; /* Smooth fade out */
+  z-index: 3; /* Below the light but above the background */
 }
 
 /* =========================================
@@ -69,16 +85,16 @@ body {
 }
 
 .navbar a {
-  color: #000000;
+  color: #ffffff;
   text-decoration: none;
   font-size: 30px;
-  transition: color 0.5s ease-in-out;
-  text-shadow: 1.5px 1.5px 2.5px rgb(255, 255, 255);
+  transition: color 0.25s ease-in-out;
+  text-shadow: 1.5px 1.5px 2.5px rgb(0, 0, 0);
 }
 
 .navbar a:hover {
-  color: #ff0073;
-  text-shadow: 1.5px 1.5px 2.5px rgb(255, 0, 200);
+  color: #ff0062;
+  text-shadow: 1.5px 1.5px 2.5px rgb(255, 0, 132);
 }
 
 /* =========================================
@@ -106,6 +122,7 @@ section {
   background: url('circuit-board.png') no-repeat center center fixed;
   background-size: cover;
   filter: brightness(1);
+  z-index: 0; /* Ensure content is above the section background */
 }
 
 #section1 {
@@ -185,7 +202,12 @@ section {
   }
 
   .light {
-    width: 175px;
-    height: 175px;
+    width: 300px;
+    height: 300px;
+  }
+
+  .trail {
+    width: 250px;
+    height: 250px;
   }
 }
