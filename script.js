@@ -59,20 +59,12 @@ window.addEventListener('deviceorientation', (event) => {
 
     // Increase acceleration for the tilt effect by multiplying by a factor
     const accelerationFactor = 2.5; // Adjust this value for more/less acceleration
-    const newX = Math.min(
-      Math.max(
-        (yTilt * accelerationFactor + 90) * (window.innerWidth / 180),
-        0
-      ),
-      window.innerWidth
-    );
+    let newX = (yTilt * accelerationFactor + 90) * (window.innerWidth / 180);
+    let newY = (90 - xTilt * accelerationFactor) * (window.innerHeight / 180);
 
-    const invertedXTilt = -xTilt * accelerationFactor;
-
-    const newY = Math.min(
-      Math.max((90 - invertedXTilt) * (window.innerHeight / 180), 0),
-      window.innerHeight
-    );
+    // Ensure values are within bounds
+    newX = Math.max(0, Math.min(newX, window.innerWidth));
+    newY = Math.max(0, Math.min(newY, window.innerHeight));
 
     // Update light position
     light.style.transform = `translate(${newX}px, ${newY}px)`;
