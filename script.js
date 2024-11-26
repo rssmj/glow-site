@@ -19,23 +19,39 @@ window.addEventListener('DOMContentLoaded', () => {
   bgOverlay.style.background = `radial-gradient(circle at ${centerX}px ${centerY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
 });
 
-document.addEventListener('mousemove', (e) => {
-  const x = e.clientX;
-  const y = e.clientY;
+function throttle(func, limit) {
+  let inThrottle;
+  return function () {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
 
-  // Update light position
-  light.style.left = `${x}px`;
-  light.style.top = `${y}px`;
+document.addEventListener(
+  'mousemove',
+  throttle((e) => {
+    const x = e.clientX;
+    const y = e.clientY;
 
-  // Update the background overlay with a fading effect
-  bgOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
-});
+    // Update light position
+    light.style.left = `${x}px`;
+    light.style.top = `${y}px`;
+
+    // Update the background overlay with a fading effect
+    bgOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
+  }, 50)
+); // Limit the event to fire at most every 50 milliseconds
 
 // Light effect with device orientation (mobile)
 window.addEventListener('deviceorientation', (event) => {
   if (event.beta !== null && event.gamma !== null) {
     // Offsets for a more natural holding position
-    const xTiltOffset = -30; // Adjust this value for forward/backward offset
+    const xTiltOffset = 90; // Adjust this value for forward/backward offset
     const yTiltOffset = 0; // Adjust this value for left/right offset
 
     const xTilt = event.beta - xTiltOffset; // Forward/backward tilt, adjusted with offset
