@@ -1,53 +1,42 @@
-// Mouse tracking for the glowing light
+// Mouse tracking for the glowing light (desktop)
 const light = document.querySelector('.light');
 const bgOverlay = document.querySelector('.bg-overlay');
 
 document.addEventListener('mousemove', (e) => {
   const x = e.clientX;
   const y = e.clientY;
+
+  // Update light position
   light.style.left = `${x}px`;
   light.style.top = `${y}px`;
 
-  // Update the background overlay to create a fading effect
+  // Update the background overlay with a fading effect
   bgOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
 });
 
+// Light effect with device orientation (mobile)
 window.addEventListener('deviceorientation', (event) => {
   if (event.beta !== null && event.gamma !== null) {
-    // Check if values are available
-    const x = event.beta; // Forward/backward tilt in degrees
-    const y = event.gamma; // Left/right tilt in degrees
+    const xTilt = event.beta; // Forward/backward tilt
+    const yTilt = event.gamma; // Left/right tilt
 
-    // Calculate new position based on orientation
+    // Map tilt values to screen dimensions
     const newX = Math.min(
-      Math.max((y + 90) * (window.innerWidth / 180), 0),
+      Math.max((yTilt + 90) * (window.innerWidth / 180), 0),
       window.innerWidth
-    ); // Adjust for orientation
+    );
     const newY = Math.min(
-      Math.max((90 - x) * (window.innerHeight / 180), 0),
+      Math.max((90 - xTilt) * (window.innerHeight / 180), 0),
       window.innerHeight
-    ); // Adjust for orientation
+    );
 
+    // Update light position
     light.style.left = `${newX}px`;
     light.style.top = `${newY}px`;
 
-    // Update the background overlay to create a fading effect
+    // Update the background overlay
     bgOverlay.style.background = `radial-gradient(circle at ${newX}px ${newY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
   }
-});
-
-window.addEventListener('deviceorientation', (event) => {
-  const x = event.beta; // Forward/backward tilt in degrees
-  const y = event.gamma; // Left/right tilt in degrees
-
-  // Calculate new position based on orientation
-  const newX = window.innerWidth / 5 + y * 3; // Adjust multiplier for sensitivity
-  const newY = window.innerHeight / 5 - x * 3; // Adjust multiplier for sensitivity
-  light.style.left = `${newX}px`;
-  light.style.top = `${newY}px`;
-
-  // Update the background overlay to create a fading effect
-  bgOverlay.style.background = `radial-gradient(circle at ${newX}px ${newY}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 0%)`;
 });
 
 // Parallax scrolling effect
