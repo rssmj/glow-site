@@ -51,7 +51,7 @@ document.addEventListener(
 window.addEventListener('deviceorientation', (event) => {
   if (event.beta !== null && event.gamma !== null) {
     // Offsets for a more natural holding position
-    const xTiltOffset = 90; // Adjust this value for forward/backward offset
+    const xTiltOffset = 60; // Adjust this value for forward/backward offset
     const yTiltOffset = 0; // Adjust this value for left/right offset
 
     const xTilt = event.beta - xTiltOffset; // Forward/backward tilt, adjusted with offset
