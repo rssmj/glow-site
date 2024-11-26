@@ -30,7 +30,7 @@ body {
   pointer-events: none;
   mix-blend-mode: screen; /* Blend light with background */
   transform: translate(-50%, -50%);
-  z-index: 4; /* Set index above the background overlay layer */
+  z-index: 4; /* Light effect index is above the background overlay layer */
   transition: transform 0.5s ease-in-out;
   filter: blur(100px); /* Add blur for a glowing effect */
 }
@@ -48,7 +48,7 @@ body {
   border-radius: 50%;
   pointer-events: none;
   transition: opacity 0.5s ease; /* Smooth fade out */
-  z-index: 3; /* Below the light but above the background */
+  z-index: 3; /* Trail is below the light but above the background */
 }
 
 /* =========================================
@@ -61,7 +61,7 @@ body {
   width: 100%;
   height: 100%;
   background: rgb(0, 0, 0, 1);
-  z-index: 1; /* Below the light but above the sections */
+  z-index: 1; /* Overlay is below the light but above the sections */
   pointer-events: none;
   transition: background 0.75s ease;
 }
@@ -113,7 +113,7 @@ section {
 
 .content {
   position: relative;
-  z-index: 2; /* Ensure content is above the section background */
+  z-index: 2; /* Content is above the section background */
   color: white;
   text-shadow: 5px 5px 20px rgb(255, 0, 140);
 }

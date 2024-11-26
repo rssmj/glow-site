@@ -32,18 +32,30 @@ function updateLightPosition(x, y) {
   });
 }
 
+// Debounce function to limit the rate of function execution
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
 // Throttle function to limit the rate of mouse movement updates
 let isThrottled = false;
 
-document.addEventListener('mousemove', (e) => {
-  if (!isThrottled) {
-    updateLightPosition(e.clientX, e.clientY);
-    isThrottled = true;
-    requestAnimationFrame(() => {
-      isThrottled = false;
-    });
-  }
-});
+document.addEventListener(
+  'mousemove',
+  debounce((e) => {
+    if (!isThrottled) {
+      updateLightPosition(e.clientX, e.clientY);
+      isThrottled = true;
+      requestAnimationFrame(() => {
+        isThrottled = false;
+      });
+    }
+  }, 10)
+); // Adjust debounce wait time as needed
 
 window.addEventListener('deviceorientation', (event) => {
   if (event.beta !== null && event.gamma !== null) {
@@ -60,7 +72,9 @@ window.addEventListener('deviceorientation', (event) => {
       window.innerHeight
     );
 
-    updateLightPosition(newX, newY);
+    // Only update the light position based on orientation
+    light.style.left = `${newX}px`;
+    light.style.top = `${newY}px`;
   }
 });
 
