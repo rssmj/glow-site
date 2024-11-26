@@ -2,6 +2,19 @@
 const light = document.querySelector('.light');
 const bgOverlay = document.querySelector('.bg-overlay');
 
+// Set the initial position of the light to the center of the screen
+window.addEventListener('DOMContentLoaded', () => {
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  // Set the initial position for the light
+  light.style.left = `${centerX}px`;
+  light.style.top = `${centerY}px`;
+
+  // Set the initial background overlay position
+  bgOverlay.style.background = `radial-gradient(circle at ${centerX}px ${centerY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
+});
+
 document.addEventListener('mousemove', (e) => {
   const x = e.clientX;
   const y = e.clientY;
