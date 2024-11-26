@@ -22,7 +22,7 @@ body {
    2. Glowing Light Effect 
 ========================================= */
 .light {
-  position: absolute;
+  position: fixed;
   width: 1000px; /* Adjusted size for a more flashlight-like effect */
   height: 1000px;
   background: radial-gradient(circle, rgb(0, 0, 0), rgb(0, 0, 0) 1%);

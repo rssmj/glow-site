@@ -31,8 +31,7 @@ window.addEventListener('deviceorientation', (event) => {
     );
 
     // Update light position
-    light.style.left = `${newX}px`;
-    light.style.top = `${newY}px`;
+    light.style.transform = `translate(${newX}px, ${newY}px)`;
 
     // Update the background overlay
     bgOverlay.style.background = `radial-gradient(circle at ${newX}px ${newY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
