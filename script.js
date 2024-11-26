@@ -25,12 +25,8 @@ window.addEventListener('deviceorientation', (event) => {
       Math.max((yTilt + 90) * (window.innerWidth / 180), 0),
       window.innerWidth
     );
-
-    // Invert xTilt effect by multiplying it by -1
-    const invertedXTilt = -xTilt;
-
     const newY = Math.min(
-      Math.max((90 - invertedXTilt) * (window.innerHeight / 180), 0),
+      Math.max((90 + xTilt) * (window.innerHeight / 180), 0), // Inverted tilt logic
       window.innerHeight
     );
 
