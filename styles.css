@@ -35,22 +35,6 @@ body {
   filter: blur(100px); /* Add blur for a glowing effect */
 }
 
-/* Trail effect */
-.trail {
-  position: absolute;
-  width: 500px; /* Size of the trail */
-  height: 500px; /* Size of the trail */
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0) 1%
-  );
-  border-radius: 50%;
-  pointer-events: none;
-  transition: opacity 0.5s ease; /* Smooth fade out */
-  z-index: 3; /* Trail is below the light but above the background */
-}
-
 /* =========================================
    3. Background Overlay for Fading Effect
 ========================================= */
