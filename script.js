@@ -11,6 +11,10 @@ window.addEventListener('DOMContentLoaded', () => {
   light.style.left = `${centerX}px`;
   light.style.top = `${centerY}px`;
 
+  // Make the initial light bigger
+  light.style.width = '300px';
+  light.style.height = '300px';
+
   // Set the initial background overlay position
   bgOverlay.style.background = `radial-gradient(circle at ${centerX}px ${centerY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%)`;
 });
@@ -30,16 +34,27 @@ document.addEventListener('mousemove', (e) => {
 // Light effect with device orientation (mobile)
 window.addEventListener('deviceorientation', (event) => {
   if (event.beta !== null && event.gamma !== null) {
-    const xTilt = event.beta; // Forward/backward tilt
-    const yTilt = event.gamma; // Left/right tilt
+    // Offsets for a more natural holding position
+    const xTiltOffset = 30; // Adjust this value for forward/backward offset
+    const yTiltOffset = 0; // Adjust this value for left/right offset
 
-    // Map tilt values to screen dimensions
+    const xTilt = event.beta - xTiltOffset; // Forward/backward tilt, adjusted with offset
+    const yTilt = event.gamma - yTiltOffset; // Left/right tilt, adjusted with offset
+
+    // Increase acceleration for the tilt effect by multiplying by a factor
+    const accelerationFactor = 1.5; // Adjust this value for more/less acceleration
     const newX = Math.min(
-      Math.max((yTilt + 90) * (window.innerWidth / 180), 0),
+      Math.max(
+        (yTilt * accelerationFactor + 90) * (window.innerWidth / 180),
+        0
+      ),
       window.innerWidth
     );
+
+    const invertedXTilt = -xTilt * accelerationFactor;
+
     const newY = Math.min(
-      Math.max((90 + xTilt) * (window.innerHeight / 180), 0), // Inverted tilt logic
+      Math.max((90 - invertedXTilt) * (window.innerHeight / 180), 0),
       window.innerHeight
     );
 
